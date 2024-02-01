@@ -40,13 +40,26 @@ export default {
 
 ## Using Shad-cn For The Components
 
-- Install The Package 'shad-cn' => `npx shadcn-ui@latest init`
+- Install The Package 'shad-cn' =>
+
+```bash
+# Using npm
+npx shadcn-ui@latest init
+```
+
 - Then Follow The Shad-cn Docs To Complete The Setup
 
 ## Using Zod For Form Validation
 
-- Install The Package 'zod' => `npm install zod`
-  Then Creating A Validator in src/lib/Validation/index.ts
+- Install The Package 'zod' =>
+
+```bash
+# Using npm
+npm install zod
+```
+
+Then Creating A Validator in src/lib/Validation/index.ts
+
 - Using The Validator In The Form
 
 ## Using React-Query
