@@ -15,10 +15,18 @@ import { Textarea } from "../ui/textarea";
 import FileUploader from "../Shared/FileUploader";
 import { PostValidation } from "@/lib/Validation";
 import { Models } from "appwrite";
+import { useCreatePost } from "@/lib/React-Query/queriesAndMutation";
+import { useUserContext } from "@/Context/AuthContext";
+import { toast } from "../ui/use-toast";
+import { useNavigate } from "react-router-dom";
 type PostFormProps = {
   post?: Models.Document;
 };
 const PostForm = ({ post }: PostFormProps) => {
+  const navigate = useNavigate();
+  const { user } = useUserContext();
+  const { mutateAsync: createPost, isPending: isLoadingCreate } =
+    useCreatePost();
   const {} = useCreatePost();
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
@@ -29,8 +37,14 @@ const PostForm = ({ post }: PostFormProps) => {
       tags: post ? post?.tags.join(",") : "",
     },
   });
-
-  function onSubmit(values: z.infer<typeof PostValidation>) {}
+  async function onSubmit(values: z.infer<typeof PostValidation>) {
+    const newPost = await createPost({
+      ...values,
+      userId: user.id,
+    });
+    if (!newPost) toast({ title: "Please Try Again" });
+    navigate("/");
+  }
   return (
     <Form {...form}>
       <form
