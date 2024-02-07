@@ -1,7 +1,6 @@
 import { INewPost, INewUser } from "@/Types";
 import { ID, Query } from "appwrite";
 import { AppWriteConfig, account, avatars, databases, storage } from "./config";
-import { getDefaultAutoSelectFamilyAttemptTimeout } from "net";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -79,7 +78,9 @@ export async function createPost(post:INewPost){
   try {
     const uploadedFile = await uploadFile(post.file[0]);
     if(!uploadedFile) throw Error;
-    const fileUrl = getFilePreView(uploadedFile.$id);
+    // const fileUrl = getFilePreView(uploadedFile.$id);
+    const fileUrl = storage.getFilePreview(AppWriteConfig.storageId,uploadedFile.$id,2000,2000,'top',100);
+    console.log(fileUrl.href);
     if (!fileUrl) {
       deleteFile(uploadedFile.$id);
       throw Error;
@@ -88,7 +89,7 @@ export async function createPost(post:INewPost){
     const newPost = await databases.createDocument(AppWriteConfig.databaseId,AppWriteConfig.postCollectionId,ID.unique(),{
       creator:post.userId,
       caption:post.caption,
-      imageUrl:fileUrl,
+      imageUrl:fileUrl.href,
       imageId:uploadedFile.$id,
       location:post.location,
       tags:tags
@@ -117,6 +118,7 @@ export async function uploadFile(file:File){
 export async function getFilePreView(fileId:string) {
 try {
   const fileUrl = storage.getFilePreview(AppWriteConfig.storageId,fileId,2000,2000,'top',100);
+  if(!fileUrl) throw Error;
   return fileUrl;
 } catch (error) {
   console.log(error);
