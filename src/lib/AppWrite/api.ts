@@ -1,7 +1,13 @@
 import { INewPost, INewUser } from "@/Types";
 import { ID, Query } from "appwrite";
 import { AppWriteConfig, account, avatars, databases, storage } from "./config";
-
+/**
+ * This Function It used To Create New User In With Out Saving It To The Database
+ * To Create The Account Object Then Saving The Data To Database Using SaveUserToDB()
+ * @var user :INewUser - The User Information That Will Be Used To Create A new User.
+ * @return newUser
+ * @author Abooo0d : abdsadalden2001@gmail.com 
+ */
 export async function createUserAccount(user: INewUser) {
   try {
     const newAccount = await account.create(
@@ -25,6 +31,11 @@ export async function createUserAccount(user: INewUser) {
     return error;
   }
 }
+/**
+ * This Function Is Used To Save The Latest Created User To The Database
+ * @param user The User Info That You Want To Add To The Database .
+ * @author Abooo0d : abdsadalden2001@gmail.com 
+ */
 export async function SaveUserToDB(user: {
   accountId: string;
   email: string;
@@ -43,6 +54,11 @@ export async function SaveUserToDB(user: {
     console.log(error);
   }
 }
+/**
+ * This Function Used To Create New Session The Email Provided
+ * @param user: That Has An Email And PAssword
+ * @returns session  : Contains Token , User & Expire In
+ */
 export async function SingInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
@@ -51,6 +67,10 @@ export async function SingInAccount(user: { email: string; password: string }) {
     return error;
   }
 }
+/**
+ * This Function IS Used To Get The Current Logged In user Info
+ * @returns currentAccount : The Info Of The Logged In User
+ */
 export async function getCurrentUser() {
   try {
     const currentAccount = await account.get();
@@ -66,6 +86,10 @@ export async function getCurrentUser() {
     console.log(error);
   }
 }
+/**
+ * This Function Is Used To Delete The Current Session
+ * @returns The Deleted Account
+ */
 export async function SignOutAccount() {
   try {
     const session = await account.deleteSession("current");
@@ -74,18 +98,26 @@ export async function SignOutAccount() {
     console.log(error);
   }
 }
+/**
+ * This Function Is used To Create new Post And Saved To Database And Upload The Image To Data Storage In Ap Write Cloud
+ * @param post : Post Object That You Want To Create
+ * @returns The Created Post
+ */
 export async function createPost(post:INewPost){
   try {
+    // Upload The Image From The Post 
     const uploadedFile = await uploadFile(post.file[0]);
     if(!uploadedFile) throw Error;
-    // const fileUrl = getFilePreView(uploadedFile.$id);
+    // Get The Image Url From The AppWrite GetFilePreview() To Save It To The Post Data
     const fileUrl = storage.getFilePreview(AppWriteConfig.storageId,uploadedFile.$id,2000,2000,'top',100);
-    console.log(fileUrl.href);
     if (!fileUrl) {
       deleteFile(uploadedFile.$id);
       throw Error;
     }
+    // Get The Tags In The Post 
     const tags = post.tags?.replace(/ /g,'').split('#') || [];
+    // Creating The New Post In The Database By Passing The Data 
+    // [databaseId,PostCollectionId,The new Post Id,The Data Object]
     const newPost = await databases.createDocument(AppWriteConfig.databaseId,AppWriteConfig.postCollectionId,ID.unique(),{
       creator:post.userId,
       caption:post.caption,
@@ -103,8 +135,15 @@ export async function createPost(post:INewPost){
     console.log(error);
   }
 }
+/**
+ * This Function Is used To Upload The Post Image To The Data Storage
+ * @param file The Image Wanted To Upload
+ * @returns The Uploaded Image
+ */
 export async function uploadFile(file:File){
   try {
+    // Creating The File In Data Storage 
+    //[storageId,file ID,The File]
     const uploadedFile = await storage.createFile(
       AppWriteConfig.storageId,
       ID.unique(),
@@ -115,17 +154,24 @@ export async function uploadFile(file:File){
     console.log(error);
   }
 }
-export async function getFilePreView(fileId:string) {
-try {
-  const fileUrl = storage.getFilePreview(AppWriteConfig.storageId,fileId,2000,2000,'top',100);
-  if(!fileUrl) throw Error;
-  return fileUrl;
-} catch (error) {
-  console.log(error);
-}
-}
+// export async function getFilePreView(fileId:string) {
+//   try {
+//     const fileUrl = storage.getFilePreview(AppWriteConfig.storageId,fileId,2000,2000,'top',100);
+//     if(!fileUrl) throw Error;
+//     return fileUrl;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+/**
+ * 
+ * @param fileId The File Wanted To Delete
+ * @returns The ok Status After Deleting The File
+ */
 export async function deleteFile(fileId:string){
   try {
+    // Deleting the File From The Data Storage
+    // [storageId,The File Id]
     await storage.deleteFile(AppWriteConfig.storageId,fileId);
     return {status:'ok'};
   } catch (error) {

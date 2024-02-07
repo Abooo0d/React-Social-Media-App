@@ -1,17 +1,11 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  useInfiniteQuery,
+import {useQuery,useMutation,useQueryClient,useInfiniteQuery,
 } from "@tanstack/react-query";
-import {
-  createPost,
-  createUserAccount,
-  SignOutAccount,
-  SingInAccount,
+import {createPost,createUserAccount,SignOutAccount,SingInAccount,
 } from "../AppWrite/api";
 import { INewPost, INewUser } from "@/Types";
 import { QUERY_KEYS } from "./queryKeys";
+// Suing React Query To manage The Data Fetching And Auto Cashing The Data
+
 export const useCreateAccount = () => {
   return useMutation({
     mutationFn: (user: INewUser) => createUserAccount(user),
@@ -26,6 +20,7 @@ export const useSignInAccount = () => {
 export const useSignOutAccount = () => {
   return useMutation({ mutationFn: SignOutAccount });
 };
+
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
