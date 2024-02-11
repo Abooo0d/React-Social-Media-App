@@ -108,15 +108,6 @@ export async function createPost(post: INewPost) {
     // Upload The Image From The Post
     const uploadedFile = await uploadFile(post.file[0]);
     if (!uploadedFile) throw Error;
-    // Get The Image Url From The AppWrite GetFilePreview() To Save It To The Post Data
-    // const fileUrl = storage.getFilePreview(
-    //   AppWriteConfig.storageId,
-    //   uploadedFile.$id,
-    //   2000,
-    //   2000,
-    //   "top",
-    //   100
-    // );
     const fileUrl = getFilePreView(uploadedFile.$id);
     if (!fileUrl) {
       deleteFile(uploadedFile.$id);
@@ -252,6 +243,56 @@ export async function deleteSavedPost(savedPostId: string) {
     );
     if (!statusCode) throw Error;
     return { status: "ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function getPostById(postId?: string) {
+  if (!postId) throw Error;
+  try {
+    const post = await databases.getDocument(
+      AppWriteConfig.databaseId,
+      AppWriteConfig.postCollectionId,
+      postId
+    );
+    if (!post) throw Error;
+    return post;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function updatePost(post: INewPost) {
+  try {
+    // Upload The Image From The Post
+    const uploadedFile = await uploadFile(post.file[0]);
+    if (!uploadedFile) throw Error;
+    const fileUrl = getFilePreView(uploadedFile.$id);
+    if (!fileUrl) {
+      deleteFile(uploadedFile.$id);
+      throw Error;
+    }
+    // Get The Tags In The Post
+    const tags = post.tags?.replace(/ /g, "").split("#") || [];
+    // Creating The New Post In The Database By Passing The Data
+    // [databaseId,PostCollectionId,The new Post Id,The Data Object]
+    const newPost = await databases.createDocument(
+      AppWriteConfig.databaseId,
+      AppWriteConfig.postCollectionId,
+      ID.unique(),
+      {
+        creator: post.userId,
+        caption: post.caption,
+        imageUrl: fileUrl.href,
+        imageId: uploadedFile.$id,
+        location: post.location,
+        tags: tags,
+      }
+    );
+    if (!newPost) {
+      await deleteFile(uploadedFile.$id);
+      throw Error;
+    }
+    return newPost;
   } catch (error) {
     console.log(error);
   }

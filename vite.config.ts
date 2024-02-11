@@ -1,6 +1,6 @@
-import path from "path"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
+import path from "path";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
@@ -9,9 +9,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server:{
-    port:3000
-  }
-})
-
-
+  server: {
+    // host: "192.168.1.100",
+    port: 3000,
+  },
+});

@@ -7,6 +7,7 @@ import {
 import { checkIsLiked } from "@/lib/utils";
 import { Models } from "appwrite";
 import { useEffect, useState } from "react";
+import Loader from "./Loader";
 type PostStatusProps = {
   post: Models.Document;
   userId: string;
@@ -14,8 +15,9 @@ type PostStatusProps = {
 const PostStatus = ({ post, userId }: PostStatusProps) => {
   const { data: currentUser } = useGetCurrentUser();
   const { mutate: likePost } = useLikePost();
-  const { mutate: savePost } = useSavePost();
-  const { mutate: deleteSavedPost } = useDeleteSavedPost();
+  const { mutate: savePost, isPending: isSavingPost } = useSavePost();
+  const { mutate: deleteSavedPost, isPending: isDeletingSavedPost } =
+    useDeleteSavedPost();
   const likesList = post.likes.map((user: Models.Document) => user.$id);
   const [likes, setLikes] = useState(likesList);
   const [isSaved, setIsSaved] = useState(false);
@@ -65,14 +67,18 @@ const PostStatus = ({ post, userId }: PostStatusProps) => {
         <p className="small-medium lg:base-medium">{likes.length}</p>
       </div>
       <div className="flex gap-2 ">
-        <img
-          src={isSaved ? "/assets/icons/saved.svg" : "/assets/icons/save.svg"}
-          alt="Like Image"
-          width={20}
-          height={20}
-          onClick={handelSavePost}
-          className="cursor-pointer"
-        />
+        {isSavingPost || isDeletingSavedPost ? (
+          <Loader />
+        ) : (
+          <img
+            src={isSaved ? "/assets/icons/saved.svg" : "/assets/icons/save.svg"}
+            alt="Like Image"
+            width={20}
+            height={20}
+            onClick={handelSavePost}
+            className="cursor-pointer"
+          />
+        )}
       </div>
     </div>
   );

@@ -20,9 +20,10 @@ import { useUserContext } from "@/Context/AuthContext";
 import { toast } from "../ui/use-toast";
 import { useNavigate } from "react-router-dom";
 type PostFormProps = {
-  post?: Models.Document;
+  postData?: Models.Document;
+  action: "Update" | "Create";
 };
-const PostForm = ({ post }: PostFormProps) => {
+const PostForm = ({ postData, action }: PostFormProps) => {
   const navigate = useNavigate();
   const { user } = useUserContext();
   const { mutateAsync: createPost, isPending: isLoadingCreate } =
@@ -31,10 +32,10 @@ const PostForm = ({ post }: PostFormProps) => {
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
     defaultValues: {
-      caption: post ? post?.caption : "",
+      caption: postData ? postData?.caption : "",
       file: [],
-      location: post ? post?.location : "",
-      tags: post ? post?.tags.join(",") : "",
+      location: postData ? postData?.location : "",
+      tags: postData ? postData?.tags.join(",") : "",
     },
   });
   async function onSubmit(values: z.infer<typeof PostValidation>) {
@@ -45,6 +46,7 @@ const PostForm = ({ post }: PostFormProps) => {
     if (!newPost) toast({ title: "Please Try Again" });
     navigate("/");
   }
+  console.log(postData?.imageUrl);
   return (
     <Form {...form}>
       <form
@@ -76,7 +78,7 @@ const PostForm = ({ post }: PostFormProps) => {
               <FormControl>
                 <FileUploader
                   fieldChange={field.onChange}
-                  mediaUrl={post?.imageUrl}
+                  mediaUrl={postData?.imageUrl}
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />
