@@ -12,6 +12,7 @@ import {
   deleteSavedPost,
   getCurrentUser,
   getInfinitePosts,
+  getInfiniteUsers,
   getPostById,
   getRecentPosts,
   likePost,
@@ -170,5 +171,17 @@ export const useSearchPosts = (searchTerms: string) => {
     queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerms],
     queryFn: () => searchPosts(searchTerms),
     enabled: !!searchTerms,
+  });
+};
+export const useGetUsers = () => {
+  return useInfiniteQuery({
+    queryKey: ["getInfiniteUsers"],
+    queryFn: getInfiniteUsers,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage: any) => {
+      if (lastPage && lastPage.documents.length === 0) return 0;
+      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+      return lastId;
+    },
   });
 };
