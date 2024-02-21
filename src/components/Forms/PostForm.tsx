@@ -62,7 +62,6 @@ const PostForm = ({ postData, action }: PostFormProps) => {
     if (!newPost) toast({ title: "Please Try Again" });
     navigate("/");
   }
-  console.log(postData?.imageUrl);
   return (
     <Form {...form}>
       <form

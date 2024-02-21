@@ -3,7 +3,6 @@ import {
   useMutation,
   useQueryClient,
   useInfiniteQuery,
-  QueryClient,
 } from "@tanstack/react-query";
 import {
   createPost,
@@ -148,7 +147,7 @@ export const useDeletePost = () => {
   return useMutation({
     mutationFn: ({ postId, imageId }: { postId: string; imageId: string }) =>
       deletePost(postId, imageId),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
       });
@@ -187,14 +186,8 @@ export const useGetUsers = () => {
   });
 };
 export const useGetSavedPosts = () => {
-  return useInfiniteQuery({
-    queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
-    queryFn: getSavedPosts,
-    initialPageParam: 0,
-    getNextPageParam: (lastPage: any) => {
-      if (lastPage && lastPage.documents.length === 0) return 0;
-      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
-      return lastId;
-    },
+  return useQuery({
+    queryKey: ["getSavedPost"],
+    queryFn: () => getSavedPosts(),
   });
 };

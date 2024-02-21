@@ -10,7 +10,6 @@ const AllUsers = () => {
   useEffect(() => {
     if (hasNextPage) fetchNextPage();
   }, [inView]);
-  console.log(users?.pages[0]?.documents);
   return (
     <div className="explore-container">
       <div className="flex-between w-full max-w-5xl mt-16 mb-7">
