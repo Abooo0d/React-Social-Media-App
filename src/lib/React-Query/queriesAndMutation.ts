@@ -15,6 +15,7 @@ import {
   getInfiniteUsers,
   getPostById,
   getRecentPosts,
+  getSavedPosts,
   likePost,
   savePost,
   searchPosts,
@@ -177,6 +178,18 @@ export const useGetUsers = () => {
   return useInfiniteQuery({
     queryKey: ["getInfiniteUsers"],
     queryFn: getInfiniteUsers,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage: any) => {
+      if (lastPage && lastPage.documents.length === 0) return 0;
+      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+      return lastId;
+    },
+  });
+};
+export const useGetSavedPosts = () => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+    queryFn: getSavedPosts,
     initialPageParam: 0,
     getNextPageParam: (lastPage: any) => {
       if (lastPage && lastPage.documents.length === 0) return 0;

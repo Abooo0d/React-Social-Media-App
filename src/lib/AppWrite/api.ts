@@ -362,3 +362,20 @@ export async function getInfiniteUsers({ pageParam }: { pageParam: number }) {
     console.log(error);
   }
 }
+export async function getSavedPosts({ pageParam }: { pageParam: number }) {
+  const queries = [Query.limit(10)];
+  try {
+    if (pageParam) {
+      queries.push(Query.cursorAfter(pageParam.toString()));
+    }
+    const savedPosts = await databases.listDocuments(
+      AppWriteConfig.databaseId,
+      AppWriteConfig.savesCollectionId,
+      queries
+    );
+    if (!savedPosts) throw Error;
+    return savedPosts;
+  } catch (error) {
+    console.log(error);
+  }
+}

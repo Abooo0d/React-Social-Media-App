@@ -18,7 +18,7 @@ const PostStatus = ({ post, userId }: PostStatusProps) => {
   const { mutate: savePost, isPending: isSavingPost } = useSavePost();
   const { mutate: deleteSavedPost, isPending: isDeletingSavedPost } =
     useDeleteSavedPost();
-  const likesList = post?.likes.map((user: Models.Document) => user.$id);
+  const likesList = post?.likes?.map((user: Models.Document) => user.$id);
   const [likes, setLikes] = useState(likesList);
   const [isSaved, setIsSaved] = useState(false);
   const savedPostRecord = currentUser?.save.find(
