@@ -8,28 +8,26 @@ const Saved = () => {
   const { data: savedPosts, isPending: isLoading } = useGetSavedPosts();
   return (
     <div className="explore-container">
+      <div className="flex-between w-full max-w-5xl mt-16 mb-7">
+        <h2 className="h3-bold lg:h2-bold">Saved Posts</h2>
+      </div>
       {isLoading ? (
         <Loader />
       ) : (
-        <>
-          <div className="flex-between w-full max-w-5xl mt-16 mb-7">
-            <h2 className="h3-bold lg:h2-bold">Saved Posts</h2>
-          </div>
-          <div className="flex flex-wrap gap-9 w-full max-w-5xl">
-            <ul className="grid-container">
-              {savedPosts &&
-                savedPosts.documents.map((post, index) => (
-                  <PostListCard
-                    key={index}
-                    post={post.post}
-                    user={user}
-                    showStatus={false}
-                    showUser={false}
-                  />
-                ))}
-            </ul>
-          </div>
-        </>
+        <div className="flex flex-wrap gap-9 w-full max-w-5xl">
+          <ul className="grid-container">
+            {savedPosts &&
+              savedPosts.documents.map((post, index) => (
+                <PostListCard
+                  key={index}
+                  post={post.post}
+                  user={user}
+                  showStatus={false}
+                  showUser={false}
+                />
+              ))}
+          </ul>
+        </div>
       )}
     </div>
   );

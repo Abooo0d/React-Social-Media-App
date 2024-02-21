@@ -1,7 +1,15 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const UpdateProfile = () => {
-  return <div>UpdateProfile</div>;
+  const { id } = useParams();
+  return (
+    <div>
+      UpdateProfile
+      <br />
+      {id}
+    </div>
+  );
 };
 
 export default UpdateProfile;

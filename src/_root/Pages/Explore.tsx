@@ -11,7 +11,12 @@ import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 const Explore = () => {
   const { ref, inView } = useInView();
-  const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
+  const {
+    data: posts,
+    fetchNextPage,
+    hasNextPage,
+    isPending: isLoading,
+  } = useGetPosts();
   const [searchValue, setSearchValue] = useState("");
   const debounceValue = useDebounce(searchValue, 500);
   const { data: searchPosts, isPending: isSearchFetching } =
@@ -58,17 +63,25 @@ const Explore = () => {
         </div>
       </div>
       <div className="flex flex-wrap gap-9 w-full max-w-5xl">
-        {showSearchResults ? (
-          <SearchResults
-            isSearchFetching={isSearchFetching}
-            searchedPost={searchPosts}
-          />
-        ) : showPosts ? (
-          <p className="text-light-4 mt-10 text-center w-full">End Of Posts</p>
+        {isLoading ? (
+          <Loader />
         ) : (
-          posts.pages.map((item, index) => (
-            <GridPostsList key={`page-${index}`} posts={item?.documents} />
-          ))
+          <>
+            {showSearchResults ? (
+              <SearchResults
+                isSearchFetching={isSearchFetching}
+                searchedPost={searchPosts}
+              />
+            ) : showPosts ? (
+              <p className="text-light-4 mt-10 text-center w-full">
+                End Of Posts
+              </p>
+            ) : (
+              posts.pages.map((item, index) => (
+                <GridPostsList key={`page-${index}`} posts={item?.documents} />
+              ))
+            )}
+          </>
         )}
       </div>
       {hasNextPage && !searchValue && (

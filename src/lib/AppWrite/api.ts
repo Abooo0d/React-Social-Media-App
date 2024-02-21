@@ -1,5 +1,5 @@
 import { INewPost, INewUser, IUpdatePost } from "@/Types";
-import { AppwriteException, ID, Query } from "appwrite";
+import { ID, Query } from "appwrite";
 import { AppWriteConfig, account, avatars, databases, storage } from "./config";
 /**
  * This Function It used To Create New User In With Out Saving It To The Database
@@ -371,6 +371,20 @@ export async function getSavedPosts() {
     );
     if (!savedPosts) throw Error;
     return savedPosts;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function getUserById(id: string) {
+  if (!id) throw Error;
+  try {
+    const userProfile = await databases.listDocuments(
+      AppWriteConfig.databaseId,
+      AppWriteConfig.userCollectionId,
+      [Query.limit(1), Query.equal("$id", [`${id}`])]
+    );
+    if (!userProfile) throw Error;
+    return userProfile;
   } catch (error) {
     console.log(error);
   }
