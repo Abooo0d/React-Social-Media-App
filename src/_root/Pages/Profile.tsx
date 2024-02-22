@@ -1,15 +1,22 @@
 import { useUserContext } from "@/Context/AuthContext";
 import Loader from "@/components/Shared/Loader";
+import PostListCard from "@/components/Shared/PostListCard";
 import { Button } from "@/components/ui/button";
-import { useGetUserProfile } from "@/lib/React-Query/queriesAndMutation";
+import {
+  useGetUserPosts,
+  useGetUserProfile,
+} from "@/lib/React-Query/queriesAndMutation";
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const Profile = () => {
   const { id } = useParams();
   const { user } = useUserContext();
-  const { data: userInfo, isPending: isLoading } = useGetUserProfile(id || "");
-  console.log(userInfo);
-  if (isLoading)
+  const { data: userInfo, isPending: usGettingUserInfo } = useGetUserProfile(
+    id || ""
+  );
+  const { data: posts, isPending: isGettingPosts } = useGetUserPosts(id || "");
+  if (usGettingUserInfo)
     return (
       <div className="flex flex-1 items-center content-center">
         <Loader />
@@ -51,7 +58,7 @@ const Profile = () => {
         </div>
         {user?.id === id ? (
           <Link
-            to={`update-profile/${id}`}
+            to={`/update-profile/${id}`}
             className="bg-dark-4 font-bold h-12 min-w-32 flex rounded-md content-center items-center px-2"
           >
             <img
@@ -68,6 +75,25 @@ const Profile = () => {
             <Button className="bg-primary-500 font-bold ">Follow</Button>
             <Button className="bg-white text-black font-bold ">Message</Button>
           </div>
+        )}
+      </div>
+      <div className="flex flex-col flex-1 px-10 py-5">
+        <h2 className="md:h3-bold lg:h2-bold mb-5">Posts</h2>
+        {isGettingPosts ? (
+          <Loader />
+        ) : (
+          <ul className="grid-container">
+            {posts &&
+              posts.documents.map((post, index) => (
+                <PostListCard
+                  key={index}
+                  post={post}
+                  user={user}
+                  showStatus={false}
+                  showUser={false}
+                />
+              ))}
+          </ul>
         )}
       </div>
     </div>

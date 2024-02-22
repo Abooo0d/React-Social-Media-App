@@ -21,7 +21,6 @@ const PostDetails = () => {
             alt="postImage"
             className="post_details-img"
           />
-
           <div className="post_details-info">
             <div className="flex-between w-full">
               <Link
@@ -52,8 +51,8 @@ const PostDetails = () => {
                 </div>
               </Link>
               <div
-                className={`flex-center ${
-                  user.id !== post?.creator?.$id ? " hidden" : ""
+                className={`${
+                  user.id !== post?.creator?.$id ? " hidden" : "flex-center"
                 }`}
               >
                 <Link to={`/update-post/${post?.$id}`}>

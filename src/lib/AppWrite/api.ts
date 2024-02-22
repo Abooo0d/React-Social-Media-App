@@ -389,3 +389,17 @@ export async function getUserById(id: string) {
     console.log(error);
   }
 }
+export async function GetUserPosts(id: string) {
+  if (!id) throw Error;
+  try {
+    const userPosts = await databases.listDocuments(
+      AppWriteConfig.databaseId,
+      AppWriteConfig.postCollectionId,
+      [Query.equal("creator", [id])]
+    );
+    if (!userPosts) throw Error;
+    return userPosts;
+  } catch (error) {
+    console.log(error);
+  }
+}
