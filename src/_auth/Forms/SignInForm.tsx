@@ -16,10 +16,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/Shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  useCreateAccount,
-  useSignInAccount,
-} from "@/lib/React-Query/queriesAndMutation";
+import { useSignInAccount } from "@/lib/React-Query/queriesAndMutation";
 import { useUserContext } from "@/Context/AuthContext";
 const SignInForm = () => {
   const navigate = useNavigate();
@@ -91,7 +88,7 @@ const SignInForm = () => {
             )}
           />
           <Button type="submit" className="shad-button_primary">
-            {isUserLoading ? (
+            {isUserLoading || isSigningIn ? (
               <div className="flex-center gap-2 ">
                 <Loader />
                 Loading

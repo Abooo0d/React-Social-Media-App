@@ -6,7 +6,6 @@ import {
   useGetUserPosts,
   useGetUserProfile,
 } from "@/lib/React-Query/queriesAndMutation";
-import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const Profile = () => {
