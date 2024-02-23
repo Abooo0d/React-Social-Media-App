@@ -4,7 +4,6 @@ import {
   useLikePost,
   useSavePost,
 } from "@/lib/React-Query/queriesAndMutation";
-import { checkIsLiked } from "@/lib/utils";
 import { Models } from "appwrite";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
