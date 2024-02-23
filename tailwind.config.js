@@ -18,6 +18,9 @@ module.exports = {
       },
     },
     extend: {
+      height: {
+        "main-section": "calc(100vh - 146px)",
+      },
       colors: {
         "primary-500": "#877EFF",
         "primary-600": "#5D5FEF",

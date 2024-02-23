@@ -153,6 +153,7 @@ export const useDeletePost = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
       });
+      queryClient.invalidateQueries();
     },
   });
 };
@@ -195,14 +196,14 @@ export const useGetSavedPosts = () => {
 };
 export const useGetUserProfile = (id: string) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.GET_USER_BY_ID],
+    queryKey: [QUERY_KEYS.GET_USER_BY_ID, id],
     queryFn: () => getUserById(id),
     enabled: !!id,
   });
 };
 export const useGetUserPosts = (id: string) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.GET_USER_POSTS],
+    queryKey: [QUERY_KEYS.GET_USER_POSTS, id],
     queryFn: () => GetUserPosts(id),
     enabled: !!id,
   });
