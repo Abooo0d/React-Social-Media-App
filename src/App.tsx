@@ -16,6 +16,8 @@ import SignUpForm from "./_auth/Forms/SignUpForm";
 import RootLayout from "./_root/RootLayout";
 import AuthLayout from "./_auth/AutLayout";
 import { Toaster } from "@/components/ui/toaster";
+import ChatPage from "./_root/Pages/ChatPage";
+import StanderLayout from "./_root/StanderdLayout";
 const App = () => {
   return (
     <main className="flex h-screen ">
@@ -26,16 +28,20 @@ const App = () => {
           <Route path="/sign-up" element={<SignUpForm />} />
         </Route>
         {/* Private routes  */}
-        <Route element={<RootLayout />}>
+        <Route element={<StanderLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/saved" element={<Saved />} />
+
           <Route path="/all-users" element={<AllUsers />} />
-          <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:id" element={<EditPost />} />
           <Route path="/posts/:id" element={<PostDetails />} />
           <Route path="/profile/:id/*" element={<Profile />} />
           <Route path="/update-profile/:id" element={<UpdateProfile />} />
+        </Route>
+        <Route element={<RootLayout />}>
+          <Route path="/saved" element={<Saved />} />
+          <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/chats" element={<ChatPage />} />
         </Route>
       </Routes>
       <Toaster />

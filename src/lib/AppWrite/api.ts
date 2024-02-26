@@ -363,12 +363,12 @@ export async function getInfiniteUsers({ pageParam }: { pageParam: number }) {
     console.log(error);
   }
 }
-export async function getSavedPosts() {
+export async function getSavedPosts(userId: string) {
   try {
     const savedPosts = await databases.listDocuments(
       AppWriteConfig.databaseId,
       AppWriteConfig.savesCollectionId,
-      [Query.limit(100)]
+      [Query.limit(100), Query.equal("user", userId)]
     );
     if (!savedPosts) throw Error;
     return savedPosts;
@@ -400,6 +400,19 @@ export async function GetUserPosts(id: string) {
     );
     if (!userPosts) throw Error;
     return userPosts;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function searchUsers(searchTerm: string) {
+  try {
+    const user = databases.listDocuments(
+      AppWriteConfig.databaseId,
+      AppWriteConfig.userCollectionId,
+      [Query.search("username", searchTerm)]
+    );
+    if (!user) throw Error;
+    return user;
   } catch (error) {
     console.log(error);
   }

@@ -6,7 +6,7 @@ const RightBar = () => {
   const { data: users, isPending: isLoading } = useGetUsers();
   return (
     <div className="max-w-[550px] bg-dark-2 py-10 px-5 hidden flex-col gap-4 xl:flex">
-      <h2 className="h3-bold md:h2-bold w-full mb-10">Top Creator</h2>
+      <h2 className="h3-bold md:h2-bold w-full mb-10">Followers</h2>
       {isLoading ? (
         <Loader />
       ) : (

@@ -20,6 +20,7 @@ import {
   likePost,
   savePost,
   searchPosts,
+  searchUsers,
   SignOutAccount,
   SingInAccount,
   updatePost,
@@ -188,10 +189,11 @@ export const useGetUsers = () => {
     },
   });
 };
-export const useGetSavedPosts = () => {
+export const useGetSavedPosts = (userId: string) => {
   return useQuery({
-    queryKey: ["getSavedPost"],
-    queryFn: () => getSavedPosts(),
+    queryKey: ["getSavedPost", userId],
+    queryFn: () => getSavedPosts(userId),
+    enabled: !!userId,
   });
 };
 export const useGetUserProfile = (id: string) => {
@@ -206,5 +208,12 @@ export const useGetUserPosts = (id: string) => {
     queryKey: [QUERY_KEYS.GET_USER_POSTS, id],
     queryFn: () => GetUserPosts(id),
     enabled: !!id,
+  });
+};
+export const useSearchUser = (searchTerm: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.SEARCH_USERS, searchTerm],
+    queryFn: () => searchUsers(searchTerm),
+    enabled: !!searchTerm,
   });
 };

@@ -336,3 +336,11 @@
     @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
   }
 }
+::-webkit-scrollbar {
+  width: 4px;
+  background-color: rgb(31 31 34);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(135 126 255);
+  width: 4px;
+}

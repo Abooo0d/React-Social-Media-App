@@ -5,7 +5,7 @@ import { useGetSavedPosts } from "@/lib/React-Query/queriesAndMutation";
 
 const Saved = () => {
   const { user } = useUserContext();
-  const { data: savedPosts, isPending: isLoading } = useGetSavedPosts();
+  const { data: savedPosts, isPending: isLoading } = useGetSavedPosts(user.id);
   return (
     <div className="explore-container">
       <div className="flex-between w-full max-w-5xl mt-16 mb-7">
