@@ -9,9 +9,11 @@ import {
   createUserAccount,
   deletePost,
   deleteSavedPost,
+  getChats,
   getCurrentUser,
   getInfinitePosts,
   getInfiniteUsers,
+  getMessages,
   getPostById,
   getRecentPosts,
   getSavedPosts,
@@ -215,5 +217,19 @@ export const useSearchUser = (searchTerm: string) => {
     queryKey: [QUERY_KEYS.SEARCH_USERS, searchTerm],
     queryFn: () => searchUsers(searchTerm),
     enabled: !!searchTerm,
+  });
+};
+export const useGetChats = (userId: string) => {
+  return useQuery({
+    queryKey: ["getChats"],
+    queryFn: () => getChats(userId),
+    enabled: !!userId,
+  });
+};
+export const useGetMessages = (senderId: string, receiverId: string) => {
+  return useQuery({
+    queryKey: ["getMessage", senderId, receiverId],
+    queryFn: () => getMessages(senderId, receiverId),
+    enabled: !!senderId || !!receiverId,
   });
 };

@@ -1,3 +1,5 @@
+import { Models } from "appwrite";
+
 export type INavLink = {
   imgURL: string;
   route: string;
@@ -58,4 +60,12 @@ export type IMessage = {
   messageBody: string;
   sender: string;
   sendTime: string;
+};
+export type IChatType = {
+  senderId: string;
+  receiverId: string;
+  messages: Models.Document[] | undefined;
+  isGettingMessages: boolean;
+  setReceiverId: React.Dispatch<React.SetStateAction<string>>;
+  setSenderId: React.Dispatch<React.SetStateAction<string>>;
 };

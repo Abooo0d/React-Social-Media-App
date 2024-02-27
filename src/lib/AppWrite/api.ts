@@ -417,3 +417,34 @@ export async function searchUsers(searchTerm: string) {
     console.log(error);
   }
 }
+export async function getChats(userId: string) {
+  if (!userId) throw Error;
+  try {
+    const chats = databases.listDocuments(
+      AppWriteConfig.databaseId,
+      AppWriteConfig.chatCollectionId
+    );
+    if (!chats) throw Error;
+    return chats;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function getMessages(senderId: string, receiverId: string) {
+  console.log("getMessages");
+  if (!senderId || !receiverId) throw Error;
+  try {
+    const messages = databases.listDocuments(
+      AppWriteConfig.databaseId,
+      AppWriteConfig.messageCollectionId,
+      [
+        Query.equal("senderId", [senderId, receiverId]),
+        Query.equal("reciverId", [senderId, receiverId]),
+      ]
+    );
+    if (!messages) throw Error;
+    return messages;
+  } catch (error) {
+    console.log(error);
+  }
+}
