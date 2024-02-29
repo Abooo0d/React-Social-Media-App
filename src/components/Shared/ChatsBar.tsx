@@ -24,8 +24,8 @@ const ChatsBar = () => {
             <>
               <ChatContact
                 userData={user}
-                key={"message" + index}
                 receiverId={receiverId}
+                key={index + "Abood "}
               />
               <hr
                 className={`${

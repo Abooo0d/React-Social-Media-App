@@ -5,6 +5,7 @@ import {
   useInfiniteQuery,
 } from "@tanstack/react-query";
 import {
+  createMessage,
   createPost,
   createUserAccount,
   deletePost,
@@ -27,7 +28,7 @@ import {
   SingInAccount,
   updatePost,
 } from "../AppWrite/api";
-import { INewPost, INewUser, IUpdatePost } from "@/Types";
+import { IMessage, INewPost, INewUser, IUpdatePost } from "@/Types";
 import { QUERY_KEYS } from "./queryKeys";
 // using React Query To manage The Data Fetching And Auto Cashing The Data
 
@@ -231,5 +232,10 @@ export const useGetMessages = (senderId: string, receiverId: string) => {
     queryKey: ["getMessage", senderId, receiverId],
     queryFn: () => getMessages(senderId, receiverId),
     enabled: !!senderId || !!receiverId,
+  });
+};
+export const useCreateMessage = () => {
+  return useMutation({
+    mutationFn: (message: IMessage) => createMessage(message),
   });
 };

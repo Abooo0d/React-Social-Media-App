@@ -431,7 +431,6 @@ export async function getChats(userId: string) {
   }
 }
 export async function getMessages(senderId: string, receiverId: string) {
-  console.log("getMessages");
   if (!senderId || !receiverId) throw Error;
   try {
     const messages = databases.listDocuments(
@@ -439,11 +438,30 @@ export async function getMessages(senderId: string, receiverId: string) {
       AppWriteConfig.messageCollectionId,
       [
         Query.equal("senderId", [senderId, receiverId]),
-        Query.equal("reciverId", [senderId, receiverId]),
+        Query.equal("receiverId", [senderId, receiverId]),
+        Query.orderDesc("$createdAt"),
       ]
     );
     if (!messages) throw Error;
     return messages;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function createMessage(message: {
+  senderId: string;
+  receiverId: string;
+  messageBody: string;
+}) {
+  try {
+    const newMessage = databases.createDocument(
+      AppWriteConfig.databaseId,
+      AppWriteConfig.messageCollectionId,
+      ID.unique(),
+      message
+    );
+    if (!newMessage) throw Error;
+    return newMessage;
   } catch (error) {
     console.log(error);
   }

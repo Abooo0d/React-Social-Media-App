@@ -56,15 +56,14 @@ export type IContextType = {
   checkAuthUser: () => Promise<boolean>;
 };
 export type IMessage = {
-  id: string;
+  senderId: string;
+  receiverId: string;
   messageBody: string;
-  sender: string;
-  sendTime: string;
 };
 export type IChatType = {
   senderId: string;
   receiverId: string;
-  messages: Models.Document[] | undefined;
+  messages: any;
   isGettingMessages: boolean;
   setReceiverId: React.Dispatch<React.SetStateAction<string>>;
   setSenderId: React.Dispatch<React.SetStateAction<string>>;

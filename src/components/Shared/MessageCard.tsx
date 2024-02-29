@@ -1,7 +1,6 @@
-import { Models } from "appwrite";
-
+import { IMessage } from "@/Types";
 type MessageCardProps = {
-  message: Models.Document;
+  message: IMessage;
   userId: string;
 };
 const MessageCard = ({ message, userId }: MessageCardProps) => {

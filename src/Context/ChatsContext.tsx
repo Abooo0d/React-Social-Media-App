@@ -1,29 +1,44 @@
-import { IChatType } from "@/Types";
 import { createContext, useContext, useEffect, useState } from "react";
 import React from "react";
-import { useUserContext } from "./AuthContext";
-import { useGetMessages } from "@/lib/React-Query/queriesAndMutation";
-import { Models } from "appwrite";
 import { getMessages } from "@/lib/AppWrite/api";
-const INITIAL_STATE = {
+import { IMessage } from "@/Types";
+export type IChatType = {
+  senderId: string;
+  receiverId: string;
+  messages: any;
+  isGettingMessages: boolean;
+  setReceiverId: React.Dispatch<React.SetStateAction<string>>;
+  setSenderId: React.Dispatch<React.SetStateAction<string>>;
+  // setMessages: React.Dispatch<
+  //   React.SetStateAction<Models.DocumentList<Models.Document> | undefined>
+  // >;
+};
+const INITIAL_STATE: IChatType = {
   senderId: "",
   receiverId: "",
-  setReceiverId: () => {},
-  setSenderId: () => {},
-  messages: [],
+  messages: undefined,
   isGettingMessages: false,
+  setReceiverId: () => "",
+  setSenderId: () => "",
 };
 const ChatsContext = createContext<IChatType>(INITIAL_STATE);
 const ChatsProvider = ({ children }: { children: React.ReactNode }) => {
   const [senderId, setSenderId] = useState("");
   const [receiverId, setReceiverId] = useState("");
-  const [messages, setMessages] = useState<Models.Document[]>();
+  const [messages, setMessages] = useState<IMessage[] | undefined>();
+  // const [messages, setMessages] = useState<IMessage | undefined>(); // Initialize with an empty array
   const [isGettingMessages, setIsGettingMessages] = useState(false);
   const FetchMessages = async () => {
     setIsGettingMessages(true);
     const data = await getMessages(senderId, receiverId);
-    setMessages(data?.documents);
-    console.log(messages);
+    const me: IMessage[] | undefined = data?.documents.map((message) => {
+      return {
+        senderId: message.senderId,
+        receiverId: message.receiverId,
+        messageBody: message.messageBody,
+      };
+    });
+    setMessages(me);
     setIsGettingMessages(false);
   };
   useEffect(() => {
