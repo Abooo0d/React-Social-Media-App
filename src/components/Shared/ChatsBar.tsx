@@ -6,7 +6,7 @@ const ChatsBar = () => {
   const { data: users, isPending: isLoadingUsers } = useGetUsers();
   const { receiverId } = useChatsContext();
   return (
-    <div className="max-w-[350px] py-10 px-5 hidden flex-col gap-4 xl:flex border-r-small border-gray-900">
+    <div className="w-full xl:max-w-[350px] py-10 px-5 flex flex-col gap-4 border-r-small border-gray-900 ">
       <div className="flex gap-5 justify-start items-center mb-10">
         <img
           src="/assets/icons/chat.svg"
@@ -19,7 +19,7 @@ const ChatsBar = () => {
       {isLoadingUsers ? (
         <Loader />
       ) : (
-        <div className="flex gap-4 px-4 w-full rounded-lg max-w-5xl flex-wrap content-start">
+        <div className="flex gap-4 px-4 w-full rounded-lg max-w-5xl flex-wrap content-start ">
           {users?.pages[0]?.documents.map((user, index) => (
             <>
               <ChatContact

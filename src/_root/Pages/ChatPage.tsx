@@ -44,8 +44,9 @@ const ChatPage = () => {
         };
       }
     );
-    setNewMessages([...currentMessage, fullMessage]);
-    console.log(newMessages);
+    currentMessage = [fullMessage, ...currentMessage];
+    console.log(currentMessage, "Abood 21");
+    setNewMessages(currentMessage);
     setMessage("");
   };
   useEffect(() => {
@@ -54,7 +55,10 @@ const ChatPage = () => {
   useEffect(() => {
     setNewMessages(messages);
     setGettingChat(false);
-  }, [message, isGettingMessages]);
+  }, [messages, isGettingMessages]);
+  useEffect(() => {
+    console.log(newMessages, "Abood 18");
+  }, [newMessages]);
 
   return (
     <div className="flex justify-between w-full ">
