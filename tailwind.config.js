@@ -20,6 +20,7 @@ module.exports = {
     extend: {
       height: {
         "main-section": "calc(100vh - 146px)",
+        "chat-window": "calc(100vh - 295px)",
       },
       colors: {
         "primary-500": "#877EFF",

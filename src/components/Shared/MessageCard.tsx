@@ -7,7 +7,7 @@ const MessageCard = ({ message, userId }: MessageCardProps) => {
   return (
     <div className="w-full flex flex-col ">
       <div
-        className={`py-4 px-6 rounded-lg w-fit max-w-400 relative ${
+        className={`xl:py-4 xl:px-6 px-4 py-2 rounded-lg w-fit max-w-400 relative ${
           message.senderId === userId
             ? `ml-auto bg-primary-500 text-light-1 rounded-br-none`
             : `mr-auto bg-dark-4 rounded-bl-none`

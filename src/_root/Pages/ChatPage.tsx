@@ -61,19 +61,20 @@ const ChatPage = () => {
   }, [newMessages]);
 
   return (
-    <div className="flex justify-between w-full ">
+    <div className="flex justify-start xl:justify-between w-full flex-wrap flex-col xl:flex-row">
       <ChatsBar />
+
       {receiverId !== "" && (
-        <section className="w-full p-10 flex content-center items-center ">
-          <main className="bg-dark-3 w-full h-full flex flex-col justify-between rounded-3xl p-10">
+        <section className="h-chat-window xl:h-full xl:flex-1 xl:p-10 p-5 flex content-center items-center ">
+          <main className="bg-dark-3 w-full h-full flex flex-col justify-between rounded-3xl xl:p-10 p-5">
             {isGettingMessages ? (
               <div className="w-full h-full flex justify-center items-center">
                 <Loader />
               </div>
             ) : (
               <>
-                <header className="w-full flex justify-between items-center py-0 px-8">
-                  <div className="info flex gap-5">
+                <header className="w-full flex justify-between items-center py-0 xl:px-8 px-4">
+                  <div className="info flex xl:gap-5 gap-2">
                     {isLoadingReceiver ? (
                       <Loader />
                     ) : (
@@ -81,27 +82,25 @@ const ChatPage = () => {
                         <img
                           src={
                             receiver?.documents[0]?.imageUrl ||
-                            "assets/images/profile.png"
+                            "assets/images/profile.png "
                           }
                           alt=""
-                          width={100}
-                          height={100}
-                          className="rounded-full"
+                          className="rounded-full xl:w-[100px] xl:h-[100px] h-[40px] w-[40px]"
                         />
-                        <div className="flex flex-col gap-2 justify-start items-center">
-                          <h2 className="md:h3-bold lg:h2-bold">
+                        <div className="flex flex-col xl:gap-2 gap-0 justify-start items-start">
+                          <h2 className="md:h3-bold lg:h2-bold text-sm">
                             {receiver?.documents[0].name}
                           </h2>
-                          <p className="text-light-3">
+                          <p className="text-light-3 text-sm">
                             @{receiver?.documents[0].username}
                           </p>
                         </div>
                       </>
                     )}
                   </div>
-                  <div className="actions flex gap-8 justify-start items-center">
-                    <LuPhone className="w-[45px] h-[45px] text-light-4 cursor-pointer p-2 duration-200 rounded-lg hover:bg-dark-4" />
-                    <LuVideo className="w-[45px] h-[45px] text-light-4 cursor-pointer p-2 duration-200  rounded-lg hover:bg-dark-4" />
+                  <div className="flex xl:gap-8 gap-2 justify-start items-center">
+                    <LuPhone className="xl:w-[45px] xl:h-[45px] w-[20px] h-[20px] text-light-4 cursor-pointer xl:p-2 p-0 duration-200 rounded-lg hover:bg-dark-4" />
+                    <LuVideo className="xl:w-[45px] xl:h-[45px] w-[20px] h-[20px] text-light-4 cursor-pointer xl:p-2 p-0 duration-200  rounded-lg hover:bg-dark-4" />
                   </div>
                 </header>
                 <hr className="border-gray-800 w-[80%] mx-auto my-4" />
@@ -124,24 +123,18 @@ const ChatPage = () => {
             )}
             <hr className="border-gray-800 w-[80%] mx-auto my-4" />
             <footer className="w-full h-[100px] flex gap-3 justify-between items-center">
-              <div className="w-full bg-dark-2 flex justify-start items-center rounded-lg py-2 px-5 h-[70px]">
-                {/* <img
-                  src="/assets/icons/chat.svg"
-                  alt=""
-                  width={50}
-                  height={50}
-                /> */}
-                <GoPaperclip className="w-[30px] h-[30px]  text-light-4" />
+              <div className="w-full bg-dark-2 flex justify-start items-center rounded-lg py-2 xl:px-5 px-2 xl:h-[70px] h-[50px]">
+                <GoPaperclip className="xl:w-[30px] xl:h-[30px] w-[25px] h-[25px] text-light-4" />
                 <input
-                  className="w-full bg-dark-2 border-0 text-lg py-3 px-6 text-light-3 h-[60px] outline-none rounded-md"
+                  className="w-full bg-dark-2 border-0 xl:text-lg text-sm py-3 xl:px-6 px-3 text-light-3 xl:h-[60px] h-[40px] outline-none rounded-md"
                   placeholder="Your Message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 />
-                <TiMicrophoneOutline className="w-[30px] h-[30px] text-light-4" />
+                <TiMicrophoneOutline className="xl:w-[30px] xl:h-[30px] w-[25px] h-[25px] text-light-4" />
               </div>
               <Button
-                className="rounded-lg bg-yellow-600 w-[70px] h-[70px]"
+                className="rounded-lg bg-yellow-600 xl:w-[70px] xl:h-[70px] h-[50px] w-[50px] "
                 onClick={() => sendMessage()}
               >
                 <FiSend className="w-[27px] h-[27px] text-dark-1" />
