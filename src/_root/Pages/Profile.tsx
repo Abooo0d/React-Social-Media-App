@@ -15,7 +15,6 @@ const Profile = () => {
     id || ""
   );
   const { data: posts, isPending: isGettingPosts } = useGetUserPosts(id || "");
-  console.log(posts);
   if (isGettingUserProfile)
     return (
       <div className="flex flex-1 items-center content-center">

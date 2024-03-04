@@ -18,6 +18,7 @@ import AuthLayout from "./_auth/AutLayout";
 import { Toaster } from "@/components/ui/toaster";
 import ChatPage from "./_root/Pages/ChatPage";
 import StanderLayout from "./_root/StanderdLayout";
+import ChatForm from "./components/Forms/ChatForm";
 const App = () => {
   return (
     <main className="flex h-screen ">
@@ -41,7 +42,9 @@ const App = () => {
         <Route element={<RootLayout />}>
           <Route path="/saved" element={<Saved />} />
           <Route path="/create-post" element={<CreatePost />} />
-          <Route path="/chats" element={<ChatPage />} />
+          <Route path="/chats" element={<ChatPage />}>
+            <Route path={"/chats/:id"} element={<ChatForm />} />
+          </Route>
         </Route>
       </Routes>
       <Toaster />

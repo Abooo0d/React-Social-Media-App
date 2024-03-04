@@ -43,7 +43,6 @@ const PostStatus = ({ post, userId }: PostStatusProps) => {
     likePost({ postId: post?.$id || "", likesArray: newLikes });
   };
   const handelSavePost = (e: React.MouseEvent) => {
-    console.log("Save Post");
     e.stopPropagation();
     if (savedPostRecord) {
       setIsSaved(false);

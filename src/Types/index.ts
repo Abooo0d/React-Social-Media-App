@@ -1,4 +1,5 @@
 import { Models } from "appwrite";
+import { symbol } from "zod";
 
 export type INavLink = {
   imgURL: string;
@@ -57,9 +58,10 @@ export type IContextType = {
 };
 export type IMessage = {
   senderId: string;
-  receiverId: string;
+  receiverId: string | undefined;
   messageBody: string;
 };
+
 export type IChatType = {
   senderId: string;
   receiverId: string;

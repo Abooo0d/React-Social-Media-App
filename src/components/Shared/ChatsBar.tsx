@@ -2,12 +2,18 @@ import { useGetUsers } from "@/lib/React-Query/queriesAndMutation";
 import ChatContact from "./ChatContact";
 import Loader from "./Loader";
 import { useChatsContext } from "@/Context/ChatsContext";
+import { useLocation } from "react-router-dom";
 const ChatsBar = () => {
   const { data: users, isPending: isLoadingUsers } = useGetUsers();
   const { receiverId } = useChatsContext();
+  const { pathname } = useLocation();
   return (
-    <div className="w-full xl:max-w-[350px] xl:py-10 px-5 flex flex-col gap-4 border-r-small border-gray-900 ">
-      <div className="xl:flex gap-5 justify-start items-center mb-10  hidden">
+    <div
+      className={`w-full xl:max-w-[350px] xl:py-10 px-5 ${
+        pathname === "/chats" ? " flex " : " hidden xl:flex "
+      } flex-col gap-4 border-r-small border-gray-900 `}
+    >
+      <div className="flex gap-5 justify-start items-center mb-10">
         <img
           src="/assets/icons/chat.svg"
           alt="chat image"
@@ -20,7 +26,7 @@ const ChatsBar = () => {
         <Loader />
       ) : (
         <>
-          <div className="flex flex-row xl:flex-col gap-4 px-4 py-4 w-full rounded-lg max-w-5xl justify-center">
+          <div className="flex flex-col gap-4 px-4 py-4 w-full rounded-lg max-w-5xl justify-center">
             {users?.pages[0]?.documents.map((user, index) => (
               <>
                 <ChatContact
@@ -29,17 +35,12 @@ const ChatsBar = () => {
                   key={index + "Abood "}
                 />
                 <hr
-                  className={`${
-                    user.$id === receiverId
-                      ? `border-primary-500 duration-200`
-                      : `border-dark-4`
-                  } w-[80%] mx-auto my-2 h-2 hidden xl:block`}
+                  className={`w-[80%] mx-auto my-2 h-2 block border-dark-4`}
                   key={index + "hr"}
                 />
               </>
             ))}
           </div>
-          <hr className="w-[80%] border-dark-4 mx-auto block xl:hidden" />
         </>
       )}
     </div>

@@ -199,7 +199,7 @@ export const useGetSavedPosts = (userId: string) => {
     enabled: !!userId,
   });
 };
-export const useGetUserProfile = (id: string) => {
+export const useGetUserProfile = (id: string | undefined) => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_USER_BY_ID, id],
     queryFn: () => getUserById(id),

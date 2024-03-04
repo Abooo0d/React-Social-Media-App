@@ -4,10 +4,10 @@ import { getMessages } from "@/lib/AppWrite/api";
 import { IMessage } from "@/Types";
 export type IChatType = {
   senderId: string;
-  receiverId: string;
+  receiverId: string | undefined;
   messages: any;
   isGettingMessages: boolean;
-  setReceiverId: React.Dispatch<React.SetStateAction<string>>;
+  setReceiverId: React.Dispatch<React.SetStateAction<string | undefined>>;
   setSenderId: React.Dispatch<React.SetStateAction<string>>;
   // setMessages: React.Dispatch<
   //   React.SetStateAction<Models.DocumentList<Models.Document> | undefined>
@@ -24,9 +24,8 @@ const INITIAL_STATE: IChatType = {
 const ChatsContext = createContext<IChatType>(INITIAL_STATE);
 const ChatsProvider = ({ children }: { children: React.ReactNode }) => {
   const [senderId, setSenderId] = useState("");
-  const [receiverId, setReceiverId] = useState("");
+  const [receiverId, setReceiverId] = useState<string | undefined>("");
   const [messages, setMessages] = useState<IMessage[] | undefined>();
-  // const [messages, setMessages] = useState<IMessage | undefined>(); // Initialize with an empty array
   const [isGettingMessages, setIsGettingMessages] = useState(false);
   const FetchMessages = async () => {
     setIsGettingMessages(true);

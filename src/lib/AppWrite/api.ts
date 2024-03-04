@@ -376,7 +376,7 @@ export async function getSavedPosts(userId: string) {
     console.log(error);
   }
 }
-export async function getUserById(id: string) {
+export async function getUserById(id: string | undefined) {
   if (!id) throw Error;
   try {
     const userProfile = await databases.listDocuments(
@@ -430,7 +430,10 @@ export async function getChats(userId: string) {
     console.log(error);
   }
 }
-export async function getMessages(senderId: string, receiverId: string) {
+export async function getMessages(
+  senderId: string,
+  receiverId: string | undefined
+) {
   if (!senderId || !receiverId) throw Error;
   try {
     const messages = databases.listDocuments(
@@ -450,7 +453,7 @@ export async function getMessages(senderId: string, receiverId: string) {
 }
 export async function createMessage(message: {
   senderId: string;
-  receiverId: string;
+  receiverId: string | undefined;
   messageBody: string;
 }) {
   try {
