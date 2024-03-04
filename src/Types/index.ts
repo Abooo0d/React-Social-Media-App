@@ -1,6 +1,3 @@
-import { Models } from "appwrite";
-import { symbol } from "zod";
-
 export type INavLink = {
   imgURL: string;
   route: string;

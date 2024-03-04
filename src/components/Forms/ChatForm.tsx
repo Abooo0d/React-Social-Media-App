@@ -29,8 +29,7 @@ const ChatForm = () => {
   const { data: receiver, isPending: isLoadingReceiver } =
     useGetUserProfile(receiverId);
   const { user } = useUserContext();
-  const { mutateAsync: createMessage, isPending: isCreatingMessage } =
-    useCreateMessage();
+  const { mutateAsync: createMessage } = useCreateMessage();
   const [message, setMessage] = useState("");
   const [newMessages, setNewMessages] = useState<IMessage[] | undefined>();
   const [gettingChat, setGettingChat] = useState(true);
@@ -41,14 +40,6 @@ const ChatForm = () => {
       receiverId: receiverId,
     };
     createMessage(fullMessage);
-    // let currentMessage: IMessage[] | undefined = newMessages?.map((message) => {
-    //   return {
-    //     senderId: message.senderId,
-    //     receiverId: message.receiverId,
-    //     messageBody: message.messageBody,
-    //   };
-    // });
-    // setNewMessages([fullMessage, ...(currentMessage ?? [])]);
     setMessage("");
   };
   useEffect(() => {
