@@ -55,13 +55,12 @@ const ChatForm = () => {
       [
         `databases.${AppWriteConfig.databaseId}.collections.${AppWriteConfig.messageCollectionId}.documents`,
       ],
-      (response) => {
+      (response: any) => {
         if (
           response.events.includes(
             "databases.*.collections.*.documents.*.create"
           )
         ) {
-          console.log("Abood 10");
           const newMessage = {
             senderId: response.payload?.senderId,
             receiverId: response.payload?.receiverId,
