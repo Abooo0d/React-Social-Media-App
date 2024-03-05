@@ -8,7 +8,7 @@ type userCardProps = {
 const UserCard = ({ user }: userCardProps) => {
   return (
     <Link
-      className="flex w-[230px] flex-col gap-5 py-6 flex-center border border-gray-900 rounded-lg cursor-pointer"
+      className="flex min-w-[230px] flex-col gap-5 py-6 flex-center border border-gray-900 rounded-lg cursor-pointer"
       to={`/profile/${user.$id}`}
     >
       <img

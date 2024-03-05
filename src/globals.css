@@ -264,7 +264,10 @@
 
   /* Grid Post List */
   .grid-container {
-    @apply w-full grid sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]  gap-7;
+    @apply w-full grid sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7;
+  }
+  .users-container {
+    @apply w-full grid sm:grid-cols-[repeat(auto-fill,minmax(230px,1fr))]  gap-7;
   }
 
   .grid-post_link {

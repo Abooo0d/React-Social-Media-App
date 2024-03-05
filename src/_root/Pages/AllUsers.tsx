@@ -38,7 +38,7 @@ const AllUsers = () => {
           />
           <Input
             type="text"
-            placeholder="Search"
+            placeholder="Search By Username"
             className="explore-search"
             value={searchValue}
             onChange={(e) => {
@@ -61,7 +61,7 @@ const AllUsers = () => {
               ) : searchUsers?.documents.length === 0 ? (
                 <p>No Results </p>
               ) : (
-                <div className="flex gap-5 px-4 w-full rounded-lg max-w-5xl">
+                <div className="users-container">
                   {searchUsers?.documents?.map((user, index) => (
                     <UserCard user={user} key={index} />
                   ))}
@@ -70,7 +70,7 @@ const AllUsers = () => {
             </>
           ) : (
             <>
-              <div className="flex gap-5 px-4 w-full rounded-lg max-w-5xl">
+              <div className="users-container">
                 {users?.pages[0]?.documents.map((user, index) => (
                   <UserCard user={user} key={index} />
                 ))}
