@@ -227,7 +227,10 @@ export const useGetChats = (userId: string) => {
     enabled: !!userId,
   });
 };
-export const useGetMessages = (senderId: string, receiverId: string) => {
+export const useGetMessages = (
+  senderId: string,
+  receiverId: string | undefined
+) => {
   return useQuery({
     queryKey: ["getMessage", senderId, receiverId],
     queryFn: () => getMessages(senderId, receiverId),

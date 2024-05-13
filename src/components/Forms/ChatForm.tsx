@@ -6,6 +6,7 @@ import { useChatsContext } from "@/Context/ChatsContext";
 import {
   useCreateMessage,
   useGetUserProfile,
+  useGetMessages,
 } from "@/lib/React-Query/queriesAndMutation";
 import Loader from "@/components/Shared/Loader";
 import { FiSend } from "react-icons/fi";
@@ -33,6 +34,7 @@ const ChatForm = () => {
   const [message, setMessage] = useState("");
   const [newMessages, setNewMessages] = useState<IMessage[] | undefined>();
   const [gettingChat, setGettingChat] = useState(true);
+  const {} = useGetMessages(user.id, receiverId);
   const sendMessage = () => {
     const fullMessage: IMessage = {
       messageBody: message,
@@ -67,7 +69,7 @@ const ChatForm = () => {
             messageBody: response.payload?.messageBody,
           };
           setNewMessages((prevMessages) => {
-            let mes: IMessage[] | undefined = prevMessages?.map((message) => {
+            const mes: IMessage[] | undefined = prevMessages?.map((message) => {
               return {
                 senderId: message.senderId,
                 receiverId: message.receiverId,

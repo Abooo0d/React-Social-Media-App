@@ -21,7 +21,7 @@ import StanderLayout from "./_root/StanderdLayout";
 import ChatForm from "./components/Forms/ChatForm";
 const App = () => {
   return (
-    <main className="flex h-screen ">
+    <main className="flex h-screen overflow-hidden">
       <Routes>
         {/* Public Routes */}
         <Route element={<AuthLayout />}>

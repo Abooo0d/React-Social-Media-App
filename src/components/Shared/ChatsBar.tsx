@@ -26,7 +26,7 @@ const ChatsBar = () => {
         <Loader />
       ) : (
         <>
-          <div className="flex flex-col gap-4 px-4 py-4 w-full rounded-lg max-w-5xl justify-center">
+          <div className="flex flex-col gap-4 px-4 py-4 w-full rounded-lg max-w-5xl justify-start h-[62%] overflow-auto">
             {users?.pages[0]?.documents.map((user, index) => (
               <>
                 <ChatContact
